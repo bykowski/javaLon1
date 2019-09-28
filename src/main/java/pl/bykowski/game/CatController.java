@@ -3,11 +3,13 @@ package pl.bykowski.game;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CatController {
@@ -22,19 +24,30 @@ public class CatController {
     }
 
     @GetMapping("/cats")
-    public String getCats(Model mode) {
-        mode.addAttribute("catListModel", catList);
+    public String getCats(Model model) {
+        model.addAttribute("catListModel", catList);
+        model.addAttribute("newCat", new Cat());
         return "catsView";
     }
 
     @PostMapping("/cats")
-    public String addCat(@RequestBody Cat cat) {
+    public String addCat(@ModelAttribute Cat cat) {
         catList.add(cat);
         return "redirect:/cats";
     }
 
-
-
+    @PostMapping("/remove-cat")
+    public String removeCat(@ModelAttribute Cat cat) {
+        Optional<Cat> first = catList.stream()
+                .filter(element -> element.getName().equals(cat.getName())).findFirst();
+        if (first.isPresent()) {
+            catList.remove(first.get());
+        }
+        else {
+            System.out.println("takiego kota nie ma!!!!!!!");
+        }
+        return "redirect:/cats";
+    }
 
 
 }

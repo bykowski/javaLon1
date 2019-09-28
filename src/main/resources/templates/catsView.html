@@ -6,7 +6,21 @@
 </head>
 <body>
 
-<h1>Siema eniu 123</h1>
+<h1>Dodawanie</h1>
+<form th:object="${newCat}" th:action="@{/cats}"  method="post">
+    <p>name: <input type="text" th:field="*{name}"></p>
+    <p>breed: <input type="text" th:field="*{breed}"></p>
+    <p>color: <input type="text" th:field="*{color}"></p>
+    <p><input type="submit" value="add new cat"></p>
+</form>
+
+<h1>Usuwanie</h1>
+<form th:object="${newCat}" th:action="@{/remove-cat}"  method="post">
+    <p>name: <input type="text" th:field="*{name}"></p>
+    <p><input type="submit" value="remove cat"></p>
+</form>
+
+<h1>Wypisywanie</h1>
 
 <tr th:each="cat: ${catListModel}">
 
