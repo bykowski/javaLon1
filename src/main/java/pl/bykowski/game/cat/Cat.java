@@ -1,4 +1,4 @@
-package pl.bykowski.game;
+package pl.bykowski.game.cat;
 
 public class Cat {
 
